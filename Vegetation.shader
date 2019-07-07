@@ -5,10 +5,13 @@
 // Unity built-in shader source. Copyright (c) 2016 Unity Technologies. MIT license (see license.txt)
 // from 2017.1.1 built-in Sprites-Diffuse Shader
 // and https://forum.unity.com/threads/shader-moving-trees-grass-in-wind-outside-of-terrain.230911/
-Shader "Custom/Vegetation" {
+Shader "Custom/Vegetation" 
+{
 
-    Properties {
+    Properties 
+	{
 		_MainTex ("Base (RGB)", 2D) = "white" {}
+		_Cutoff("Cutoff", Range(0,1)) = .5
 		_MainColor ("Color", Color) = (1,1,1,1)
 
 		_turb ("Turbulence", float) = 1
@@ -22,7 +25,9 @@ Shader "Custom/Vegetation" {
     }
 
 
-    SubShader {
+
+    SubShader 
+	{
 		Tags { "RenderType" = "Opaque" }
 
 		CGPROGRAM
@@ -31,6 +36,7 @@ Shader "Custom/Vegetation" {
 		#include "UnityCG.cginc"
 
 		sampler2D _MainTex;
+		float _Cutoff;
 		float4 _MainColor;
 		float _turb;
 		float _xScale;
@@ -40,10 +46,14 @@ Shader "Custom/Vegetation" {
 		float _Speed;
 		float _Amount;
 
+
+
 		struct Input
 		{
 			float2 uv_MainTex;
 		};
+
+
 
 		void vert (inout appdata_full v)
 		{
@@ -58,12 +68,20 @@ Shader "Custom/Vegetation" {
 			
 		}
 
+
+
 		void surf (Input IN, inout SurfaceOutput o)
 		{
-			o.Albedo = _MainColor * tex2D(_MainTex, IN.uv_MainTex).rgb;
+			float4 tex = tex2D(_MainTex, IN.uv_MainTex);
+
+			if (tex.a < _Cutoff)
+			{
+				discard;
+			}
+
+			o.Albedo = _MainColor * tex.rgb;
 		}
 
 		ENDCG
-
 	} 
 }
