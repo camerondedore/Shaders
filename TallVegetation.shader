@@ -26,7 +26,7 @@
 		Tags { "RenderType" = "Opaque" }
 
 		CGPROGRAM
-		#pragma surface surf Lambert vertex:vert
+		#pragma surface surf Lambert vertex:vert addshadow
 		#pragma target 3.0
 		#include "UnityCG.cginc"
 
