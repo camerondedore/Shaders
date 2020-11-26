@@ -7,6 +7,7 @@
 		_Cutoff("Cutoff", Range(0,1)) = .5
 		_MainColor("Color", Color) = (1,1,1,1)
 		_Smooth("Smoothness", Range(0,1)) = .5
+		_Metal("Metallic", Range(0,1)) = .5
 		_MinY("Minimum Y Value", float) = 0.0
 		_NormalY("Normalize Y Value", float) = 1
 
@@ -35,6 +36,7 @@
 		float _Cutoff;
 		float4 _MainColor;
 		float _Smooth;
+		float _Metal;
 		float _MinY;
 		float _NormalY;
 		float _turb;
@@ -83,6 +85,7 @@
 
 			o.Albedo = _MainColor * tex.rgb;
 			o.Smoothness = _Smooth;
+			o.Metallic = _Metal;
 		}
 
 		ENDCG

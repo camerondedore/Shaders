@@ -14,6 +14,7 @@ Shader "Custom/Vegetation"
 		_Cutoff("Cutoff", Range(0,1)) = .5
 		_MainColor ("Color", Color) = (1,1,1,1)
 		_Smooth("Smoothness", Range(0,1)) = .5
+		_Metal("Metallic", Range(0,1)) = .5
 
 		_turb ("Turbulence", float) = 1
 
@@ -40,6 +41,7 @@ Shader "Custom/Vegetation"
 		float _Cutoff;
 		float4 _MainColor;
 		float _Smooth;
+		float _Metal;
 		float _turb;
 		float _xScale;
 		float _yScale;
@@ -83,6 +85,7 @@ Shader "Custom/Vegetation"
 
 			o.Albedo = _MainColor * tex.rgb;
 			o.Smoothness = _Smooth;
+			o.Metallic = _Metal;
 		}
 
 		ENDCG
