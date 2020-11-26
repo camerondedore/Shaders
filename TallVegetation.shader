@@ -6,6 +6,7 @@
 		_MainTex("Base (RGBA)", 2D) = "white" {}
 		_Cutoff("Cutoff", Range(0,1)) = .5
 		_MainColor("Color", Color) = (1,1,1,1)
+		_Smooth("Smoothness", Range(0,1)) = .5
 		_MinY("Minimum Y Value", float) = 0.0
 		_NormalY("Normalize Y Value", float) = 1
 
@@ -26,13 +27,14 @@
 		Tags { "RenderType" = "Opaque" }
 
 		CGPROGRAM
-		#pragma surface surf Lambert vertex:vert addshadow
+		#pragma surface surf Standard vertex:vert addshadow
 		#pragma target 3.0
 		#include "UnityCG.cginc"
 
 		sampler2D _MainTex;
 		float _Cutoff;
 		float4 _MainColor;
+		float _Smooth;
 		float _MinY;
 		float _NormalY;
 		float _turb;
@@ -70,7 +72,7 @@
 
 
 
-		void surf(Input IN, inout SurfaceOutput o)
+		void surf(Input IN, inout SurfaceOutputStandard o)
 		{
 			float4 tex = tex2D(_MainTex, IN.uv_MainTex);
 
@@ -80,6 +82,7 @@
 			}
 
 			o.Albedo = _MainColor * tex.rgb;
+			o.Smoothness = _Smooth;
 		}
 
 		ENDCG
