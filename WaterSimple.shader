@@ -164,7 +164,7 @@ Shader "Custom/WaterSimple"
 
 			// apply
 			o.Albedo = foam + clamp(foamEdge, 0, 1);
-			o.Emission = lerp(_WaterFogColor + (waveEmit1 + waveEmit2 + waveEmit3) * 0.06, backgroundColor, fogFactor) + 0.25 * foam + 0.25 * clamp(foamEdge, 0, 0.25);
+			o.Emission = clamp(lerp(_WaterFogColor + (waveEmit1 + waveEmit2 + waveEmit3) * 0.06, backgroundColor, fogFactor) + 0.25 * foam + 0.25 * clamp(foamEdge, 0, 0.25), 0, 1);
             o.Metallic = _Metallic;
             o.Smoothness = _Glossiness - waveColorTotal - clamp((1 - depthDifference / _FoamEdgeDistance) * _FoamEdgePower, 0, 1);
             o.Alpha = _Color.a;
