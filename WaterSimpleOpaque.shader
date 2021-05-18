@@ -72,14 +72,14 @@
 			float2 p3 = float2(_WaveData3.x * _Time.y, _WaveData3.y * _Time.y);
 
 			// normal map texture
-			fixed4 n1 = tex2D (_WaveNormal1, IN.uv_MainTex * _WaveData1.z + p1);
-			fixed4 n2 = tex2D (_WaveNormal2, IN.uv_MainTex * _WaveData2.z + p2);
-			fixed4 n3 = tex2D (_WaveNormal3, IN.uv_MainTex * _WaveData3.z + p3);
+			fixed4 n1 = tex2D (_WaveNormal1, IN.uv_MainTex * _WaveData1.z * unity_ObjectToWorld[0][0] + p1);
+			fixed4 n2 = tex2D (_WaveNormal2, IN.uv_MainTex * _WaveData2.z * unity_ObjectToWorld[0][0] + p2);
+			fixed4 n3 = tex2D (_WaveNormal3, IN.uv_MainTex * _WaveData3.z * unity_ObjectToWorld[0][0] + p3);
 
 			// black/white height
-			fixed4 waveColor1 = tex2D (_WaveHeight1, IN.uv_MainTex * _WaveData1.z + p1);
-			fixed4 waveColor2 = tex2D (_WaveHeight2, IN.uv_MainTex * _WaveData2.z + p2);
-			fixed4 waveColor3 = tex2D (_WaveHeight3, IN.uv_MainTex * _WaveData3.z + p3);
+			fixed4 waveColor1 = tex2D (_WaveHeight1, IN.uv_MainTex * _WaveData1.z * unity_ObjectToWorld[0][0] + p1);
+			fixed4 waveColor2 = tex2D (_WaveHeight2, IN.uv_MainTex * _WaveData2.z * unity_ObjectToWorld[0][0] + p2);
+			fixed4 waveColor3 = tex2D (_WaveHeight3, IN.uv_MainTex * _WaveData3.z * unity_ObjectToWorld[0][0] + p3);
 
 			// foam calculation
 			float waveColorTotal = pow(waveColor1 * _FoamCutoff * _WaveData1.w, 10) *
