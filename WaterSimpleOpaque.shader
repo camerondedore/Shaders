@@ -10,13 +10,13 @@
 		_WaveHeight2 ("Wave Height 2", 2D) = "white" {}
 		_WaveHeight3 ("Wave Height 3", 2D) = "white" {}
 		_Foam ("Wave Foam", 2D) = "white" {}
-		_FoamCutoff ("Foam Cutoff", Range(0,10)) = 1
-		_FoamScale ("Foam Scale", Float) = 30
+		_FoamCutoff ("Foam Cutoff", Range(0,10)) = 0.78
+		_FoamScale ("Foam Scale", Float) = .1
         _Glossiness ("Smoothness", Range(0,1)) = 0.5
         _Metallic ("Metallic", Range(0,1)) = 0.0
-		_WaveData1 ("Wave Data 1 (x,y,scale,amp)", Vector) = (0,0,10,1)
-		_WaveData2 ("Wave Data 2 (x,y,scale,amp)", Vector) = (0,0,10,1)
-		_WaveData3 ("Wave Data 3 (x,y,scale,amp)", Vector) = (0,0,10,1)
+		_WaveData1 ("Wave Data 1 (x,y,scale,amp)", Vector) = (0,0,0.01,1)
+		_WaveData2 ("Wave Data 2 (x,y,scale,amp)", Vector) = (0,0,0.05,1)
+		_WaveData3 ("Wave Data 3 (x,y,scale,amp)", Vector) = (0,0,0.1,1)
     }
     SubShader
     {
@@ -96,7 +96,7 @@
 			float2 foamPosition = foamVelocity * _Time.y;
 
 			// foam texture
-			fixed4 foam = tex2D (_Foam, IN.uv_MainTex * _FoamScale + foamPosition) * waveColorTotal;
+			fixed4 foam = tex2D (_Foam, IN.uv_MainTex * _FoamScale * unity_ObjectToWorld[0][0] + foamPosition) * waveColorTotal;
 
 			// wave emission
 			fixed4 waveEmit1 = _Color * pow(waveColor1 * _WaveData1.w, 2);

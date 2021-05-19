@@ -14,18 +14,18 @@ Shader "Custom/WaterSimple"
 		_WaveHeight2 ("Wave Height 2", 2D) = "white" {}
 		_WaveHeight3 ("Wave Height 3", 2D) = "white" {}
 		_Foam ("Wave Foam", 2D) = "white" {}
-		_FoamCutoff ("Foam Cutoff", Range(0,10)) = 1
-		_FoamScale ("Foam Scale", Float) = 30
-		_FoamEdgePower ("Foam Edge Power", Float) = 5
-		_FoamEdgeDistance ("Foam Edge Distance", Float) = 5
+		_FoamCutoff ("Foam Cutoff", Range(0,10)) = 0.78
+		_FoamScale ("Foam Scale", Float) = 0.1
+		_FoamEdgePower ("Foam Edge Power", Range(0,1)) = 1
+		_FoamEdgeDistance ("Foam Edge Distance", Float) = 0.5
         _Glossiness ("Smoothness", Range(0,1)) = 0.5
         _Metallic ("Metallic", Range(0,1)) = 0.0
-		_WaveData1 ("Wave Data 1 (x,y,scale,amp)", Vector) = (0,0,10,1)
-		_WaveData2 ("Wave Data 2 (x,y,scale,amp)", Vector) = (0,0,10,1)
-		_WaveData3 ("Wave Data 3 (x,y,scale,amp)", Vector) = (0,0,10,1)
+		_WaveData1 ("Wave Data 1 (x,y,scale,amp)", Vector) = (0,0,0.01,1)
+		_WaveData2 ("Wave Data 2 (x,y,scale,amp)", Vector) = (0,0,0.05,1)
+		_WaveData3 ("Wave Data 3 (x,y,scale,amp)", Vector) = (0,0,0.1,1)
 		_WaterFogDensity ("Fog Density", Float) = 1
 		_WaterFogColor ("Fog Color", Color) = (1,1,1,1)
-		_RefractionStrength ("Refraction Strength", Range(0, 1)) = 0.25
+		_RefractionStrength ("Refraction Strength", Range(0, 1)) = 0.055
     }
     SubShader
     {
@@ -132,7 +132,7 @@ Shader "Custom/WaterSimple"
 			float2 foamPosition = foamVelocity * _Time.y;
 
 			// foam texture
-			fixed4 foam = tex2D (_Foam, IN.uv_MainTex * _FoamScale + foamPosition) * waveColorTotal;
+			fixed4 foam = tex2D (_Foam, IN.uv_MainTex * _FoamScale * unity_ObjectToWorld[0][0] + foamPosition) * waveColorTotal;
 
 			// wave emission
 			fixed4 waveEmit1 = lerp(_WaterFogColor, _Color, 0.5) * pow(waveColor1 * _WaveData1.w, 2);
@@ -162,7 +162,7 @@ Shader "Custom/WaterSimple"
 			float3 backgroundColor = tex2D(_WaterBackground, uv).rgb;
 
 			// edge foam
-			fixed4 foamEdge = clamp(tex2D (_Foam, IN.uv_MainTex * _FoamScale + foamPosition), 0.25, 1) * ((1 - depthDifference / _FoamEdgeDistance)) * _FoamEdgePower;
+			fixed4 foamEdge = clamp(tex2D (_Foam, IN.uv_MainTex * _FoamScale * unity_ObjectToWorld[0][0] + foamPosition), 0.25, 1) * ((1 - depthDifference / _FoamEdgeDistance)) * _FoamEdgePower;
 
 			// apply
 			o.Albedo = foam + clamp(foamEdge, 0, 1);
