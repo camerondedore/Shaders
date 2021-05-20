@@ -3,12 +3,12 @@
     Properties
     {
         _Color ("Color", Color) = (1,1,1,1)
-        _Emission ("Emission", 2D) = "white" {}
+        _Emission ("Emission (r)", 2D) = "white" {}
 		_EmissionColor ("Emission Color", Color) = (1,1,1,1)
-		_EmissionStrength ("Emission Strength", Range(0, 10)) = 1
+		_EmissionStrength ("Emission Strength", Range(0, 100)) = 1
 		_FlickerSpeed ("Flicker Speed", Range(0, 10)) = 1
 		_FlickerMin ("Flicker Minimum", Range(0, 1)) = 0
-		_FlickerTurb ("Flicker Turbulence", Range(0, 20)) = 1
+		_FlickerWorldUnit ("Flicker World Unit", Range(0, 1)) = 0.1
 
     }
     SubShader
@@ -36,7 +36,7 @@
         float _EmissionStrength;
         float _FlickerSpeed;
         float _FlickerMin;
-        float _FlickerTurb;
+        float _FlickerWorldUnit;
 
         // Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
         // See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
@@ -54,7 +54,11 @@
 
         void surf (Input IN, inout SurfaceOutputStandard o)
 		{
-			float positionOffset = (IN.position.x + IN.position.y + IN.position.z) * _FlickerTurb;
+			// calculate fake noise using world position
+			float worldUnitMult = 1 / _FlickerWorldUnit;
+			float positionOffset = (IN.position.x * worldUnitMult) +
+				(IN.position.y * worldUnitMult) + 
+				(IN.position.z * worldUnitMult);
 
 			// calculate flicker
 			float flicker = sin(_Time.y * _FlickerSpeed + positionOffset) 
@@ -65,7 +69,7 @@
 			
 			// apply
             o.Albedo = _Color.rgb;
-			o.Emission = tex2D(_Emission, IN.uv_MainTex) * _EmissionColor * _EmissionStrength * flicker;
+			o.Emission = tex2D(_Emission, IN.uv_MainTex).x * _EmissionColor * _EmissionStrength * flicker;
             o.Alpha = _Color.a;
         }
         ENDCG
