@@ -7,3 +7,5 @@
 * https://www.ronja-tutorials.com/2018/03/30/simple-surface.html
 * https://connect.unity.com/p/writing-a-double-sided-shader-the-right-way
 * https://shadowmint.gitbooks.io/unity-material-shaders/content/shaders/surface/rim_lighting.html
+* https://roystan.net/articles/outline-shader.html
+* https://www.youtube.com/watch?v=s79Zu0F8fuY
