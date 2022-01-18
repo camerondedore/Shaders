@@ -9,3 +9,4 @@
 * https://shadowmint.gitbooks.io/unity-material-shaders/content/shaders/surface/rim_lighting.html
 * https://roystan.net/articles/outline-shader.html
 * https://www.youtube.com/watch?v=s79Zu0F8fuY
+* https://www.youtube.com/watch?v=84A1FcQt9v4
