@@ -10,3 +10,5 @@
 * https://roystan.net/articles/outline-shader.html
 * https://www.youtube.com/watch?v=s79Zu0F8fuY
 * https://www.youtube.com/watch?v=84A1FcQt9v4
+* https://www.youtube.com/watch?v=NiOGWZXBg4Y
+* https://answers.unity.com/questions/1630087/shader-graph-draw-object-on-top.html
