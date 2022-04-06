@@ -49,7 +49,7 @@
 		{
 			// get position to pass to surf
 			UNITY_INITIALIZE_OUTPUT(Input, o);
-            o.position = mul(unity_ObjectToWorld, v.vertex).xyz;
+            o.position = mul(unity_ObjectToWorld, float4(0,0,0,1)).xyz;
 		}
 
         void surf (Input IN, inout SurfaceOutputStandard o)
