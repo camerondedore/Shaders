@@ -12,3 +12,4 @@
 * https://www.youtube.com/watch?v=84A1FcQt9v4
 * https://www.youtube.com/watch?v=NiOGWZXBg4Y
 * https://answers.unity.com/questions/1630087/shader-graph-draw-object-on-top.html
+* https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-saturate
